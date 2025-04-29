@@ -16,7 +16,7 @@ jpp.Setup("MyFilesName", "json", "C:/MyFolder");
 // Example for saving a string:
 public void SaveTheData()
 {
-  // jpp.SetString("KEY_NAME", "DEFAULT_VALUE");
+  // jpp.SetString("KEY_NAME", "NEW_VALUE");
   jpp.SetString("username", username);
 
   // Anything you set is only temporarily saved in the jpp instance.
