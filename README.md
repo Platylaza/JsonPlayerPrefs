@@ -6,6 +6,7 @@ Using the style of Unity's PlayerPrefs save data to json files on your hard driv
 private readonly JPP jpp = new();
 
 // Setup the instance by telling it what name, extension, and filePath you would like it to use for saving data.
+// jpp.Setup() must be called before running any other functions. It doesn't hurt to call it more than once, although it won't be helpful.
 jpp.Setup("MyFilesName", "json", "C:/MyFolder");
 // Default values for jpp.Setup() are as follows:
  * Filename      - "New-JPP-File"
@@ -15,7 +16,7 @@ jpp.Setup("MyFilesName", "json", "C:/MyFolder");
 // Example for saving a string:
 public void SaveTheData()
 {
-  // jpp.GetString("KEY_NAME", "DEFAULT_VALUE");
+  // jpp.SetString("KEY_NAME", "DEFAULT_VALUE");
   jpp.SetString("username", username);
 
   // Anything you set is only temporarily saved in the jpp instance.
