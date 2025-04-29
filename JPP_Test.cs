@@ -15,6 +15,11 @@ public class JPP_Test : MonoBehaviour
 
     private void Start()
     {
+        // If you would like the file to have a basic encryption set 'encryptFiles' to true.
+        // This must be set to true to read encrypted files aswell
+        // !! - THIS MUST BE RUN BEFORE jpp.Setup() in order to encrypt - !!
+        jpp.encryptFiles = true; // The default is false.
+
         // Setup the instance by telling it what name, extension, and filePath you would like it to use for saving data.
         // This must be run even before calling any other jpp functions
         jpp.Setup("MyFilesName");
