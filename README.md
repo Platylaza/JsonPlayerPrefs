@@ -13,8 +13,8 @@ jpp.Setup("MyFilesName", "json", "C:/MyFolder");
  * FileExtention - "json"
  * FolderPath    - UnityEngine.Application.persistentDataPath
 
-// If you would like the file to have a basic encryption set the to true. the default is false.
-jpp.encryptFiles = true;
+// If you would like the file to have a basic encryption set 'encryptFiles' to true.
+jpp.encryptFiles = true; // The default is false.
 
 // Example for saving a string:
 public void SaveTheData()
