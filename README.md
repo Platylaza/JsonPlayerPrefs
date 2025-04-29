@@ -8,11 +8,9 @@ private readonly JPP jpp = new();
 // Setup the instance by telling it what name, extension, and filePath you would like it to use for saving data.
 jpp.Setup("MyFilesName", "json", "C:/MyFolder");
 // Default values for jpp.Setup() are as follows:
-/*
  * Filename      - "New-JPP-File"
  * FileExtention - "json"
  * FolderPath    - UnityEngine.Application.persistentDataPath
- */
 
 // Example for saving a string:
 public void SaveTheData()
