@@ -154,7 +154,11 @@ MonoBehaviour:
   myInt: 0
   myFloat: 0
   myString: 
+  myBool: 1
   myColor: {r: 0, g: 0, b: 0, a: 0}
+  myKeyCode: 0
+  myVector2: {x: 0, y: 0}
+  myVector3: {x: 0, y: 0, z: 0}
 --- !u!4 &1470785299
 Transform:
   m_ObjectHideFlags: 0

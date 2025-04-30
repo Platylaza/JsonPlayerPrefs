@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,8 +11,11 @@ public class JPP_Test : MonoBehaviour
     public int myInt;
     public float myFloat;
     public string myString;
-    public Color myColor;
     public bool myBool;
+    public Color myColor;
+    public KeyCode myKeyCode;
+    public Vector2 myVector2;
+    public Vector3 myVector3;
 
     private void Start()
     {
@@ -38,8 +42,11 @@ public class JPP_Test : MonoBehaviour
         jpp.SetInt("my-Int", myInt);
         jpp.SetFloat("my-Float", myFloat);
         jpp.SetString("my-String", myString);
-        jpp.SetColor("my-Color", myColor);
         jpp.SetBool("my-Bool", myBool);
+        jpp.SetColor("my-Color", myColor);
+        jpp.SetKeyCode("my-KeyCode", myKeyCode);
+        jpp.SetVector2("my-Vector2", myVector2);
+        jpp.SetVector3("my-Vector3", myVector3);
 
         // Anything you set is only temporarily saved in the jpp instance.
         // To save/update the file to be equal to the data in the jpp you need to run this function.
@@ -54,7 +61,39 @@ public class JPP_Test : MonoBehaviour
         myInt = jpp.GetInt("my-Int", myInt);
         myFloat = jpp.GetFloat("my-Float", myFloat);
         myString = jpp.GetString("my-String", myString);
-        myColor = jpp.GetColor("my-Color", myColor);
         myBool = jpp.GetBool("my-Bool", myBool);
+        myColor = jpp.GetColor("my-Color", myColor);
+        myKeyCode = jpp.GetKeyCode("my-KeyCode", myKeyCode);
+        myVector2 = jpp.GetVector2("my-Vector2", myVector2);
+        myVector3 = jpp.GetVector3("my-Vector3", myVector3);
     }
+
+    // There is also SetVar()/GetVar() and it will detect the type of the value/default value that is input. But it only works for the types used above.
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -129,6 +129,66 @@ public class JPP
         else
             DebugError();
     }
+    public void SetKeyCode(string key, KeyCode value)
+    {
+        if (hasBeenSetup)
+        {
+            if (savedData.keycodeKeys.Contains(key)) savedData.keycodes[savedData.keycodeKeys.IndexOf(key)] = value;
+            else AddKeyValuePair(key, value);
+        }
+        else
+            DebugError();
+    }
+    public void SetVector2(string key, Vector2 value)
+    {
+        if (hasBeenSetup)
+        {
+            if (savedData.vector2Keys.Contains(key)) savedData.vector2s[savedData.vector2Keys.IndexOf(key)] = value;
+            else AddKeyValuePair(key, value);
+        }
+        else
+            DebugError();
+    }
+    public void SetVector3(string key, Vector3 value)
+    {
+        if (hasBeenSetup)
+        {
+            if (savedData.vector3Keys.Contains(key)) savedData.vector3s[savedData.vector3Keys.IndexOf(key)] = value;
+            else AddKeyValuePair(key, value);
+        }
+        else
+            DebugError();
+    }
+    public void SetVar(string key, object value)
+    {
+        switch (value)
+        {
+            case int:
+                SetInt(key, (int)value);
+                break;
+            case float:
+                SetFloat(key, (float)value);
+                break;
+            case string:
+                SetString(key, (string)value);
+                break;
+            case bool:
+                SetBool(key, (bool)value);
+                break;
+            case Color:
+                SetColor(key, (Color)value);
+                break;
+            case KeyCode:
+                SetKeyCode(key, (KeyCode)value);
+                break;
+            case Vector2:
+                SetVector2(key, (Vector2)value);
+                break;
+            case Vector3:
+                SetVector3(key, (Vector3)value);
+                break;
+        }
+    }
     #endregion SetVar
 
     #region GetVar
@@ -167,6 +227,57 @@ public class JPP
         DebugError();
         return defaultValue;
     }
+    public KeyCode GetKeyCode(string key, KeyCode defaultValue = KeyCode.None)
+    {
+        if (hasBeenSetup) return savedData.keycodeKeys.Contains(key) ? savedData.keycodes[savedData.keycodeKeys.IndexOf(key)] : defaultValue;
+
+        DebugError();
+        return defaultValue;
+    }
+    public Vector2 GetVector2(string key, Vector2 defaultValue = new Vector2())
+    {
+        if (hasBeenSetup) return savedData.vector2Keys.Contains(key) ? savedData.vector2s[savedData.vector2Keys.IndexOf(key)] : defaultValue;
+
+        DebugError();
+        return defaultValue;
+    }
+    public Vector3 GetVector3(string key, Vector3 defaultValue = new Vector3())
+    {
+        if (hasBeenSetup) return savedData.vector3Keys.Contains(key) ? savedData.vector3s[savedData.vector3Keys.IndexOf(key)] : defaultValue;
+
+        DebugError();
+        return defaultValue;
+    }
+    public void GetVar(string key, object value)
+    {
+        switch (value)
+        {
+            case int:
+                GetInt(key, (int)value);
+                break;
+            case float:
+                GetFloat(key, (float)value);
+                break;
+            case string:
+                GetString(key, (string)value);
+                break;
+            case bool:
+                GetBool(key, (bool)value);
+                break;
+            case Color:
+                GetColor(key, (Color)value);
+                break;
+            case KeyCode:
+                GetKeyCode(key, (KeyCode)value);
+                break;
+            case Vector2:
+                GetVector2(key, (Vector2)value);
+                break;
+            case Vector3:
+                GetVector3(key, (Vector3)value);
+                break;
+        }
+    }
     #endregion GetVar
 
     protected void AddKeyValuePair(string key, object value)
@@ -192,6 +303,18 @@ public class JPP
             case Color:
                 savedData.colorKeys.Add(key);
                 savedData.colors.Add((Color)value);
+                break;
+            case KeyCode:
+                savedData.keycodeKeys.Add(key);
+                savedData.keycodes.Add((KeyCode)value);
+                break;
+            case Vector2:
+                savedData.vector2Keys.Add(key);
+                savedData.vector2s.Add((Vector2)value);
+                break;
+            case Vector3:
+                savedData.vector3Keys.Add(key);
+                savedData.vector3s.Add((Vector3)value);
                 break;
         }
 
@@ -229,7 +352,7 @@ public class JPP
                 else
                     return true;
             }
-    
+
         return false;
     }
 
@@ -252,6 +375,9 @@ public class SavedData
     public List<string> strings = new();
     public List<bool> bools = new();
     public List<Color> colors = new();
+    public List<KeyCode> keycodes = new();
+    public List<Vector2> vector2s = new();
+    public List<Vector3> vector3s = new();
 
     // Keys for the lists
     public List<string> intKeys = new();
@@ -259,4 +385,7 @@ public class SavedData
     public List<string> stringKeys = new();
     public List<string> boolKeys = new();
     public List<string> colorKeys = new();
+    public List<string> keycodeKeys = new();
+    public List<string> vector2Keys = new();
+    public List<string> vector3Keys = new();
 }
