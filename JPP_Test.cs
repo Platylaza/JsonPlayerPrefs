@@ -15,20 +15,18 @@ public class JPP_Test : MonoBehaviour
 
     private void Start()
     {
-        // If you would like the file to have a basic encryption set 'encryptFiles' to true.
-        // This must be set to true to read encrypted files aswell
-        // !! - THIS MUST BE RUN BEFORE jpp.Setup() in order to encrypt - !!
-        jpp.encryptFiles = true; // The default is false.
-
         // Setup the instance by telling it what name, extension, and filePath you would like it to use for saving data.
         // This must be run even before calling any other jpp functions
         jpp.Setup("MyFilesName");
 
         // Default values for jpp.Setup() are as follows:
         /*
-         * Filename - "New-JPP-File"
          * FileExtention - "json"
          * FolderPath - UnityEngine.Application.persistentDataPath
+         * Encrypt - false
+         * 
+         * The strings "DEFAULT" and "PERSISTANT_DATA_PATH" will be replaced with the default folder path when used in the folder path
+         * Ex: jpp.Setup("MyFilesName", "json", "DEFAULT/MyFolder");
          */
     }
 
@@ -44,7 +42,7 @@ public class JPP_Test : MonoBehaviour
         jpp.SetBool("my-Bool", myBool);
 
         // Anything you set is only temporarily saved in the jpp instance.
-        // To save/update the file to the data in the jpp you need to run this function.
+        // To save/update the file to be equal to the data in the jpp you need to run this function.
         jpp.SaveAllVars();
     }
 

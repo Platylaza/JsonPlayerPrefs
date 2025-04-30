@@ -6,28 +6,29 @@ using UnityEngine;
 public class JPP
 {
     protected SavedData savedData;
-    private static readonly string randomNameKey = "2849372"; // Generate a random number to replace the with.
+    private static readonly string randomNameKey = "1324657"; // Generate a random number to replace the with.
     private string folderPath, fileName, fileExtension;
     private bool hasBeenSetup = false;
 
-    public static string defaultFolderPath = "PERSISTANT_DATA_PATH", defaultFileName = "New-JPP-File", defaultExtension = "json";
-    public bool encryptFiles = false;
+    public static string defaultFolderPath = "PERSISTANT_DATA_PATH",  defaultExtension = "json";
+    private bool encryptFiles = false;
 
-    public void Setup(string fileName = "DEFAULT", string fileExtension = "DEFAULT", string folderPath = "DEFAULT")
+    public void Setup(string fileName, string fileExtension = "DEFAULT", string folderPath = "DEFAULT", bool encrypt = false)
     {
         if (!hasBeenSetup)
         {
             savedData = new SavedData();
 
             folderPath = folderPath.Replace("DEFAULT", defaultFolderPath);
-            fileName = fileName.Replace("DEFAULT", defaultFileName);
             fileExtension = fileExtension.Replace("DEFAULT", defaultExtension);
 
             folderPath = folderPath.Replace("PERSISTANT_DATA_PATH", $"{Application.persistentDataPath}");
 
             this.folderPath = folderPath == "DEFAULT" ? defaultFolderPath : folderPath;
-            this.fileName = fileName == "DEFAULT" ? defaultFileName : fileName;
+            this.fileName = fileName;
             this.fileExtension = fileExtension == "DEFAULT" ? defaultExtension : fileExtension;
+
+            encryptFiles = encrypt;
 
             LoadAllVars();
             hasBeenSetup = true;
@@ -39,8 +40,8 @@ public class JPP
     /// <summary>
     /// Be careful with this, it will overrite all temporary data with the saved data from the file.
     /// </summary>
-    public void ReSetup(string folderPath = "DEFAULT", string fileName = "DEFAULT", string fileExtension = "DEFAULT")
-    { hasBeenSetup = false; Setup(fileName, fileExtension, folderPath); }
+    public void ReSetup(string fileName, string fileExtension = "DEFAULT", string folderPath = "DEFAULT", bool encrypt = false)
+    { hasBeenSetup = false; Setup(fileName, fileExtension, folderPath, encrypt); }
 
     /// <summary>
     /// Update or Save the data from savedData to a json file.
@@ -54,7 +55,7 @@ public class JPP
             string dataToSave = JsonUtility.ToJson(savedData, !encryptFiles);
             string path = $"{folderPath}/{fileName}.{fileExtension}";
 
-            File.WriteAllText(path, EncryptDecrypt(dataToSave));
+            File.WriteAllText(path, EncryptDecrypt(dataToSave, encryptFiles));
         }
     }
 
@@ -70,8 +71,8 @@ public class JPP
         {
             string saveData = File.ReadAllText(path);
             Debug.Log(saveData);
-            Debug.Log(EncryptDecrypt(saveData));
-            savedData = JsonUtility.FromJson<SavedData>(EncryptDecrypt(saveData));
+            Debug.Log(EncryptDecrypt(saveData, DataIsEncrypted(saveData)));
+            savedData = JsonUtility.FromJson<SavedData>(EncryptDecrypt(saveData, DataIsEncrypted(saveData)));
         }
         else
             Debug.LogWarning($"File not found at path \"{path}\"");
@@ -168,7 +169,7 @@ public class JPP
     }
     #endregion GetVar
 
-    public void AddKeyValuePair(string key, object value)
+    protected void AddKeyValuePair(string key, object value)
     {
         switch (value)
         {
@@ -200,19 +201,43 @@ public class JPP
     /// Encrypt or Decrypt the data. Ex: Encrypted = !Encrypted;
     /// </summary>
     /// <param name="data"></param> Data to Encrypt/Decrypt.
-    private string EncryptDecrypt(string data)
+    private string EncryptDecrypt(string data, bool encrypt)
     {
         // Encrypt the file
         string result = "";
 
+        if (!encrypt)
+            return data;
+
         for (int i = 0; i < data.Length; i++)
             result += (char)(data[i] ^ randomNameKey[i % randomNameKey.Length]);
 
-        return (encryptFiles ? result : data);
+        return result;
+        //return (encryptFiles ? result : data);
     }
 
-    public void DebugError(string overrideError = "")
+    private bool DataIsEncrypted(string data)
+    {
+        if (data.Length > 0)
+            foreach (char c in data)
+            {
+                Debug.Log(c);
+                if (c == ' ' || c == '\n')
+                    continue;
+                if (c == '{')
+                    return false;
+                else
+                    return true;
+            }
+    
+        return false;
+    }
+
+    private void DebugError(string overrideError = "")
     { Debug.LogError("Setup() must be called before running a save/set function"); }
+
+    public bool HasBeenSetup() { return hasBeenSetup; }
+    public bool EncryptFiles() { return encryptFiles; }
 }
 
 [Serializable]
