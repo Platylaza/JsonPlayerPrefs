@@ -49,7 +49,8 @@ As of version 1.0 the saveable datatypes are:
 You can choose a name, folder path, and extension for your data, and can even change files mid-game
 by running the function ReSetup() and inputting different values.
 ### Basic Encryption
-If you enable encryption before calling Setup() or ReSetup()
+If you enable encryption by calling Setup() or ReSetup() and setting encrypt to true, it will replace each character with a random symbol.
+When loading data, JPP will automatically detect if a file is encrypted and decrypt it if it is.
 
 ## Missing Features
 At this time, you cannot unset/delete any data that you save.
