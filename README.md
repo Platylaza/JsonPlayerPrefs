@@ -38,13 +38,16 @@ public void LoadTheData()
 
 ## Capabilities and Restrictions
 ### Saveable datatypes
-As of version 1.0 the saveable datatypes are:
+As of version 1.2.1 the saveable datatypes are:
  * Int
  * Float
  * String
  * Boolean
  * Color
- * (Keycode, Vector2, and Vector3 will likely be added soon)
+ * Keycode
+ * Vector2
+ * Vector3
+
 ### File settings
 You can choose a name, folder path, and extension for your data, and can even change files mid-game
 by running the function ReSetup() and inputting different values.
