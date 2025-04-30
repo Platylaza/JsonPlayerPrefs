@@ -17,7 +17,9 @@ jpp.Setup("MyFilesName", "json", "C:/MyFolder");
  * Filename      - "New-JPP-File"
  * FileExtention - "json"
  * FolderPath    - UnityEngine.Application.persistentDataPath
-
+// The strings "DEFAULT" and "PERSISTANT_DATA_PATH" will be replaced with the default folder path when used in the folder path
+// Ex: jpp.Setup("MyFilesName", "json", "DEFAULT/MyFolder");
+   
 // Example for saving a string:
 public void SaveTheData()
 {
