@@ -5,20 +5,14 @@ Using the style of Unity's PlayerPrefs save data to json files on your hard driv
 // Create new JPP variable/instance - readonly is not necessary, but it is recommended
 private readonly JPP jpp = new();
 
-### Encryption
-// If you would like the file to have a basic encryption set 'encryptFiles' to true.
-// This must be set to true to read encrypted files aswell
-// !! - THIS MUST BE RUN BEFORE jpp.Setup() in order to encrypt - !!
-jpp.encryptFiles = true; // The default is false.
-
 ### General Setup
 // Setup the instance by telling it what name, extension, and filePath you would like it to use for saving data.
 // jpp.Setup() must be called before running any other functions. It doesn't hurt to call it more than once, although it won't be helpful.
-jpp.Setup("MyFilesName", "json", "C:/MyFolder");
+jpp.Setup("MyFilesName", "json", "C:/MyFolder", true);
 // Default values for jpp.Setup() are as follows:
- * Filename      - "New-JPP-File"
  * FileExtention - "json"
  * FolderPath    - UnityEngine.Application.persistentDataPath
+ * Encrypt       - false
 
 
 // The strings "DEFAULT" and "PERSISTANT_DATA_PATH" will be replaced with the default folder path when used in the folder path
@@ -41,3 +35,21 @@ public void LoadTheData()
   // jpp.GetString("KEY_NAME", "DEFAULT_VALUE");
   username = jpp.GetString("username", username);
 }
+
+## Capabilities and Restrictions
+### Saveable datatypes
+As of version 1.0 the saveable datatypes are:
+ * Int
+ * Float
+ * String
+ * Boolean
+ * Color
+ * (Keycode, Vector2, and Vector3 will likely be added soon)
+### File settings
+You can choose a name, folder path, and extension for your data, and can even change files mid-game
+by running the function ReSetup() and inputting different values.
+### Basic Encryption
+If you enable encryption before calling Setup() or ReSetup()
+
+## Missing Features
+At this time, you cannot unset/delete any data that you save.
