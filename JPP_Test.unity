@@ -154,11 +154,29 @@ MonoBehaviour:
   myInt: 0
   myFloat: 0
   myString: 
-  myBool: 1
+  myBool: 0
   myColor: {r: 0, g: 0, b: 0, a: 0}
   myKeyCode: 0
   myVector2: {x: 0, y: 0}
   myVector3: {x: 0, y: 0, z: 0}
+  myString2: 
+  displayableTempData:
+    ints: 
+    floats: []
+    strings: []
+    bools: 
+    colors: []
+    keycodes: 
+    vector2s: []
+    vector3s: []
+    intKeys: []
+    floatKeys: []
+    stringKeys: []
+    boolKeys: []
+    colorKeys: []
+    keycodeKeys: []
+    vector2Keys: []
+    vector3Keys: []
 --- !u!4 &1470785299
 Transform:
   m_ObjectHideFlags: 0
