@@ -12,14 +12,14 @@ public class JPP
 
     /// <summary> 
     /// This is a string that will be used as a default value for all JPP instances when calling Setup() or ReSetup(). <br/>
-    /// If you change this value for 1 JPP instance it will change it for all current and new instances. (This does not save after the game is closed.)
+    /// If you change this value for 1 JPP instance, it will change it for all current and new instances. (This does not save after the game is closed.)
     /// </summary>
     public static string defaultFolderPath = "PERSISTANT_DATA_PATH", defaultExtension = "json";
 
     #region Main Functions
     /// <summary>
     /// Essential for the proper use of JPP and required before saving or loading any data. <br/>
-    /// This function sets-up the JPP instance so that it can be used properly and safely.
+    /// This function sets up the JPP instance so that it can be used properly and safely.
     /// </summary>
     public void Setup(string fileName, string fileExtension = "DEFAULT", string folderPath = "DEFAULT", bool encrypt = false)
     {
@@ -39,13 +39,13 @@ public class JPP
     }
 
     /// <summary>
-    /// Essentially resets the JPP instance, this is dangerous to do, so you must be careful using it. <br/>
-    /// This function will overrite all temporary data with the data that is saved on the file.
+    /// Essentially resets the JPP instance. This is dangerous to do, so you must be careful using it. <br/>
+    /// This function will overwrite all temporary data with the data that is saved in the file.
     /// </summary>
     public void ReSetup(string fileName, string fileExtension = "DEFAULT", string folderPath = "DEFAULT", bool encrypt = false)
     { hasBeenSetup = false; Setup(fileName, fileExtension, folderPath, encrypt); }
 
-    /// <summary> Update or Save the data from this JPP's temporary data to a json file. </summary>
+    /// <summary> Update or Save the data from this JPP's temporary data to a JSON file. </summary>
     public void SaveAllVars()
     {
         if (!hasBeenSetup)
@@ -59,7 +59,7 @@ public class JPP
         }
     }
 
-    /// <summary> Load a json file to this JPP's temporary data storage. </summary>
+    /// <summary> Load a JSON file to this JPP's temporary data storage. </summary>
     public void LoadAllVars()
     {
         string path = FilePath();
@@ -267,7 +267,7 @@ public class JPP
         return defaultValue;
     }
     /// <summary> 
-    /// Returns a varialbe from this JPP's temporary data storage. <br/>
+    /// Returns a variable from this JPP's temporary data storage. <br/>
     /// This function automatically detects which type you are looking for based on the defaultValue parameter.
     /// </summary>
     public object GetVar(string key, object defaultValue)
@@ -395,7 +395,7 @@ public class JPP
     #endregion UnsetVar
 
     #region File Edit Functions
-    /// <summary> Deletes ALL DATA from from the FILE, but keeps the temporary data. </summary>
+    /// <summary> Deletes ALL DATA from the FILE, but keeps the temporary data. </summary>
     public void ClearFileData(string fileName = "DEFAULT", string fileExtension = "DEFAULT", string folderPath = "DEFAULT")
     {
         SavedData tempData = savedData;
@@ -405,7 +405,7 @@ public class JPP
 
         savedData = tempData;
     }
-    /// <summary> DELETES THE FILE this is NOT REVERSABLE. </summary>
+    /// <summary> DELETES THE FILE. This is NOT REVERSIBLE. </summary>
     public void DeleteFile(string path = "DEFAULT") 
     {
         path = path == "DEFAULT" ? FilePath() : path;
@@ -517,7 +517,7 @@ public class JPP
         return result;
         //return (encryptFiles ? result : data);
     }
-    /// <summary> Checks if the file is in json format. If so, returns false; else, returns true. </summary>
+    /// <summary> Checks if the file is in JSON format. If so, returns false; else, returns true. </summary>
     protected bool DataIsEncrypted(string data)
     {
         if (data.Length > 0)
@@ -535,7 +535,7 @@ public class JPP
         return false;
     }
 
-    /// <summary> Returns the file path as a dictionary which is practically an associative string array with key value pairs. </summary>
+    /// <summary> Returns the file path as a dictionary, which is practically an associative string array with key-value pairs. </summary>
     protected Dictionary<string, string> FormatedFilePath(string fileName, string fileExtension = "DEFAULT", string folderPath = "DEFAULT")
     {
         Dictionary<string, string> pathParts = new();
@@ -589,7 +589,7 @@ public class JPP
     #endregion Public Util Functions
 }
 
-/// <summary> A class that is setup for being saved to JSON, and contains all data that is saved/loaded while in play-mode. </summary>
+/// <summary> A class that is set up for being saved to JSON, and contains all data that is saved/loaded while in play-mode. </summary>
 [System.Serializable]
 public class SavedData
 {
