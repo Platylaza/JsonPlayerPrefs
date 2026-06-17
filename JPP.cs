@@ -67,8 +67,6 @@ public class JPP
         if (File.Exists(path))
         {
             string saveData = File.ReadAllText(path);
-            Debug.Log(saveData);
-            Debug.Log(EncryptDecrypt(saveData, DataIsEncrypted(saveData)));
             savedData = JsonUtility.FromJson<SavedData>(EncryptDecrypt(saveData, DataIsEncrypted(saveData)));
         }
         else
