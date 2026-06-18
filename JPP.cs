@@ -164,6 +164,39 @@ public class JPP
         else
             DebugError();
     }
+    /// <summary> Saves a Vector4 to this JPP's temporary data storage. </summary>
+    public void SetVector4(string key, Vector4 value)
+    {
+        if (hasBeenSetup)
+        {
+            if (savedData.vector4Keys.Contains(key)) savedData.vector4s[savedData.vector4Keys.IndexOf(key)] = value;
+            else AddKeyValuePair(key, value);
+        }
+        else
+            DebugError();
+    }
+    /// <summary> Saves a Quaternion to this JPP's temporary data storage. </summary>
+    public void SetQuaternion(string key, Quaternion value)
+    {
+        if (hasBeenSetup)
+        {
+            if (savedData.quaternionKeys.Contains(key)) savedData.quaternions[savedData.quaternionKeys.IndexOf(key)] = value;
+            else AddKeyValuePair(key, value);
+        }
+        else
+            DebugError();
+    }
+    /// <summary> Saves a byte array to this JPP's temporary data storage. </summary>
+    public void SetBytes(string key, byte[] values)
+    {
+        if (hasBeenSetup)
+        {
+            if (savedData.byteArrayKeys.Contains(key)) savedData.byteArrays[savedData.byteArrayKeys.IndexOf(key)] = new ByteArray(values);
+            else AddKeyValuePair(key, values);
+        }
+        else
+            DebugError();
+    }
     /// <summary> 
     /// Saves a variable to this JPP's temporary data storage. <br/>
     /// This function automatically detects which type you are saving.
@@ -172,29 +205,38 @@ public class JPP
     {
         switch (value)
         {
-            case int:
-                SetInt(key, (int)value);
+            case int i:
+                SetInt(key, i);
                 break;
-            case float:
-                SetFloat(key, (float)value);
+            case float f:
+                SetFloat(key, f);
                 break;
-            case string:
-                SetString(key, (string)value);
+            case string s:
+                SetString(key, s);
                 break;
-            case bool:
-                SetBool(key, (bool)value);
+            case bool b:
+                SetBool(key, b);
                 break;
-            case Color:
-                SetColor(key, (Color)value);
+            case Color c:
+                SetColor(key, c);
                 break;
-            case KeyCode:
-                SetKeyCode(key, (KeyCode)value);
+            case KeyCode kc:
+                SetKeyCode(key, kc);
                 break;
-            case Vector2:
-                SetVector2(key, (Vector2)value);
+            case Vector2 v2:
+                SetVector2(key, v2);
                 break;
-            case Vector3:
-                SetVector3(key, (Vector3)value);
+            case Vector3 v3:
+                SetVector3(key, v3);
+                break;
+            case Vector4 v4:
+                SetVector4(key, v4);
+                break;
+            case Quaternion q:
+                SetQuaternion(key, q);
+                break;
+            case byte[] by:
+                SetBytes(key, by);
                 break;
         }
     }
@@ -265,6 +307,30 @@ public class JPP
         DebugError();
         return defaultValue;
     }
+    /// <summary> Returns a Vector4 from this JPP's temporary data storage. </summary>
+    public Vector4 GetVector4(string key, Vector4 defaultValue = new Vector4())
+    {
+        if (hasBeenSetup) return savedData.vector4Keys.Contains(key) ? savedData.vector4s[savedData.vector4Keys.IndexOf(key)] : defaultValue;
+
+        DebugError();
+        return defaultValue;
+    }
+    /// <summary> Returns a Quaternion from this JPP's temporary data storage. </summary>
+    public Quaternion GetQuaternion(string key, Quaternion defaultValue = new Quaternion())
+    {
+        if (hasBeenSetup) return savedData.quaternionKeys.Contains(key) ? savedData.quaternions[savedData.quaternionKeys.IndexOf(key)] : defaultValue;
+
+        DebugError();
+        return defaultValue;
+    }
+    /// <summary> Returns a byte array from this JPP's temporary data storage. </summary>
+    public byte[] GetBytes(string key, byte[] defaultValue = null)
+    {
+        if (hasBeenSetup) return savedData.byteArrayKeys.Contains(key) ? savedData.byteArrays[savedData.byteArrayKeys.IndexOf(key)].byteArray : defaultValue;
+
+        DebugError();
+        return defaultValue;
+    }
     /// <summary> 
     /// Returns a variable from this JPP's temporary data storage. <br/>
     /// This function automatically detects which type you are looking for based on the defaultValue parameter.
@@ -273,22 +339,28 @@ public class JPP
     {
         switch (defaultValue)
         {
-            case int:
-                return GetInt(key, (int)defaultValue);
-            case float:
-                return GetFloat(key, (float)defaultValue);
-            case string:
-                return GetString(key, (string)defaultValue);
-            case bool:
-                return GetBool(key, (bool)defaultValue);
-            case Color:
-                return GetColor(key, (Color)defaultValue);
-            case KeyCode:
-                return GetKeyCode(key, (KeyCode)defaultValue);
-            case Vector2:
-                return GetVector2(key, (Vector2)defaultValue);
-            case Vector3:
-                return GetVector3(key, (Vector3)defaultValue);
+            case int i:
+                return GetInt(key, i);
+            case float f:
+                return GetFloat(key, f);
+            case string s:
+                return GetString(key, s);
+            case bool b:
+                return GetBool(key, b);
+            case Color c:
+                return GetColor(key, c);
+            case KeyCode kc:
+                return GetKeyCode(key, kc);
+            case Vector2 v2:
+                return GetVector2(key, v2);
+            case Vector3 v3:
+                return GetVector3(key, v3);
+            case Vector4 v4:
+                return GetVector4(key, v4);
+            case Quaternion q:
+                return GetQuaternion(key, q);
+            case byte[] by:
+                return GetBytes(key, by);
         }
         return defaultValue;
     }
@@ -312,7 +384,7 @@ public class JPP
     public void UnsetVar(string key, string type) 
     {
         type = type.ToLower().Replace(" ", "");
-
+        int index;
         switch (type)
         {
             case "all":
@@ -324,69 +396,96 @@ public class JPP
                 UnsetVar(key, "keycode");
                 UnsetVar(key, "vector2");
                 UnsetVar(key, "vector3");
+                UnsetVar(key, "vector4");
+                UnsetVar(key, "quaternion");
+                UnsetVar(key, "bytes");
                 break;
             case "int":
-                if (savedData.intKeys.Contains(key))
+                index = savedData.intKeys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.intKeys.IndexOf(key);
                     savedData.ints.RemoveAt(index);
                     savedData.intKeys.RemoveAt(index);
                 }
                 break;
             case "float":
-                if (savedData.floatKeys.Contains(key))
+                index = savedData.floatKeys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.floatKeys.IndexOf(key);
                     savedData.floats.RemoveAt(index);
                     savedData.floatKeys.RemoveAt(index);
                 }
                 break;
             case "string":
-                if (savedData.stringKeys.Contains(key))
+                index = savedData.stringKeys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.stringKeys.IndexOf(key);
                     savedData.strings.RemoveAt(index);
                     savedData.stringKeys.RemoveAt(index);
                 }
                 break;
             case "bool":
-                if (savedData.boolKeys.Contains(key))
+                index = savedData.boolKeys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.boolKeys.IndexOf(key);
                     savedData.bools.RemoveAt(index);
                     savedData.boolKeys.RemoveAt(index);
                 }
                 break;
             case "color":
-                if (savedData.colorKeys.Contains(key))
+                index = savedData.colorKeys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.colorKeys.IndexOf(key);
                     savedData.colors.RemoveAt(index);
                     savedData.colorKeys.RemoveAt(index);
                 }
                 break;
             case "keycode":
-                if (savedData.keycodeKeys.Contains(key))
+                index = savedData.keycodeKeys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.keycodeKeys.IndexOf(key);
                     savedData.keycodes.RemoveAt(index);
                     savedData.keycodeKeys.RemoveAt(index);
                 }
                 break;
             case "vector2":
-                if (savedData.vector2Keys.Contains(key))
+                index = savedData.vector2Keys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.vector2Keys.IndexOf(key);
                     savedData.vector2s.RemoveAt(index);
                     savedData.vector2Keys.RemoveAt(index);
                 }
                 break;
             case "vector3":
-                if (savedData.vector3Keys.Contains(key))
+                index = savedData.vector3Keys.IndexOf(key);
+                if (index > -1)
                 {
-                    int index = savedData.vector3Keys.IndexOf(key);
                     savedData.vector3s.RemoveAt(index);
                     savedData.vector3Keys.RemoveAt(index);
+                }
+                break;
+            case "vector4":
+                index = savedData.vector4Keys.IndexOf(key);
+                if (index > -1)
+                {
+                    savedData.vector4s.RemoveAt(index);
+                    savedData.vector4Keys.RemoveAt(index);
+                }
+                break;
+            case "quaternion":
+                index = savedData.quaternionKeys.IndexOf(key);
+                if (index > -1)
+                {
+                    savedData.quaternions.RemoveAt(index);
+                    savedData.quaternionKeys.RemoveAt(index);
+                }
+                break;
+            case "bytes":
+                index = savedData.byteArrayKeys.IndexOf(key);
+                if (index > -1)
+                {
+                    savedData.byteArrays.RemoveAt(index);
+                    savedData.byteArrayKeys.RemoveAt(index);
                 }
                 break;
         }
@@ -466,37 +565,49 @@ public class JPP
     {
         switch (value)
         {
-            case int:
+            case int i:
                 savedData.intKeys.Add(key);
-                savedData.ints.Add((int)value);
+                savedData.ints.Add(i);
                 break;
-            case float:
+            case float f:
                 savedData.floatKeys.Add(key);
-                savedData.floats.Add((float)value);
+                savedData.floats.Add(f);
                 break;
-            case string:
+            case string s:
                 savedData.stringKeys.Add(key);
-                savedData.strings.Add((string)value);
+                savedData.strings.Add(s);
                 break;
-            case bool:
+            case bool b:
                 savedData.boolKeys.Add(key);
-                savedData.bools.Add((bool)value);
+                savedData.bools.Add(b);
                 break;
-            case Color:
+            case Color c:
                 savedData.colorKeys.Add(key);
-                savedData.colors.Add((Color)value);
+                savedData.colors.Add(c);
                 break;
-            case KeyCode:
+            case KeyCode kc:
                 savedData.keycodeKeys.Add(key);
-                savedData.keycodes.Add((KeyCode)value);
+                savedData.keycodes.Add(kc);
                 break;
-            case Vector2:
+            case Vector2 v2:
                 savedData.vector2Keys.Add(key);
-                savedData.vector2s.Add((Vector2)value);
+                savedData.vector2s.Add(v2);
                 break;
-            case Vector3:
+            case Vector3 v3:
                 savedData.vector3Keys.Add(key);
-                savedData.vector3s.Add((Vector3)value);
+                savedData.vector3s.Add(v3);
+                break;
+            case Vector4 v4:
+                savedData.vector4Keys.Add(key);
+                savedData.vector4s.Add(v4);
+                break;
+            case Quaternion q:
+                savedData.quaternionKeys.Add(key);
+                savedData.quaternions.Add(q);
+                break;
+            case byte[] by:
+                savedData.byteArrayKeys.Add(key);
+                savedData.byteArrays.Add(new ByteArray(by));
                 break;
         }
 
@@ -618,6 +729,9 @@ public class SavedData
     public List<KeyCode> keycodes = new();
     public List<Vector2> vector2s = new();
     public List<Vector3> vector3s = new();
+    public List<Vector4> vector4s = new();
+    public List<Quaternion> quaternions = new();
+    public List<ByteArray> byteArrays = new();
 
     // Keys for the lists
     [Header(" - Lists of keys:")]
@@ -629,4 +743,16 @@ public class SavedData
     public List<string> keycodeKeys = new();
     public List<string> vector2Keys = new();
     public List<string> vector3Keys = new();
+    public List<string> vector4Keys = new();
+    public List<string> quaternionKeys = new();
+    public List<string> byteArrayKeys = new();
+}
+/// <summary> A class that is set up for saving an array of bytes. </summary>
+[System.Serializable]
+public class ByteArray
+{
+    // This class is necessary for saving an array in JPP. If you want to save an array of 
+    // another type, you can copy this class and change the type from byte[] to int[], for example.
+    public byte[] byteArray;
+    public ByteArray(byte[] byteArray) => this.byteArray = byteArray;
 }

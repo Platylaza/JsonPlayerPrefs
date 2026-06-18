@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class JPP_Test : MonoBehaviour
@@ -16,6 +13,9 @@ public class JPP_Test : MonoBehaviour
     public KeyCode myKeyCode;
     public Vector2 myVector2;
     public Vector3 myVector3;
+    public Vector4 myVector4;
+    public Quaternion myQuaternion;
+    public byte[] myBytes;
 
     [Header("")]
     public string myString2;
@@ -25,7 +25,7 @@ public class JPP_Test : MonoBehaviour
     {
         // Setup the instance by telling it what name, extension, and filePath you would like it to use for saving data.
         // This must be run even before calling any other jpp functions
-        jpp.Setup("MyFile-v1.3.1");
+        jpp.Setup("MyFile-v1.4.0");
 
         // Default values for jpp.Setup() are as follows:
         /*
@@ -58,6 +58,9 @@ public class JPP_Test : MonoBehaviour
         jpp.SetKeyCode("my-KeyCode", myKeyCode);
         jpp.SetVector2("my-Vector2", myVector2);
         jpp.SetVector3("my-Vector3", myVector3);
+        jpp.SetVector4("my-Vector4", myVector4);
+        jpp.SetQuaternion("my-Quaternion", myQuaternion);
+        jpp.SetBytes("my-Bytes", myBytes);
 
         // SetVar automaticly detects the type of NEW_VALUE
         // jpp.SetVar("KEY_NAME", "NEW_VALUE"); - Both values are required
@@ -81,6 +84,9 @@ public class JPP_Test : MonoBehaviour
         myKeyCode = jpp.GetKeyCode("my-KeyCode", myKeyCode);
         myVector2 = jpp.GetVector2("my-Vector2", myVector2);
         myVector3 = jpp.GetVector3("my-Vector3", myVector3);
+        myVector4 = jpp.GetVector4("my-Vector4", myVector4);
+        myQuaternion = jpp.GetQuaternion("my-Quaternion", myQuaternion);
+        myBytes = jpp.GetBytes("my-Byte", myBytes);
 
         // GetVar automaticly detects the type of DEFAULT_VALUE
         // Unfortuntly, casting is required when using GetVar. Get___() is highly recommended over GetVar()

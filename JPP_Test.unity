@@ -163,14 +163,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17bdab16883cc17479d7f9727cc6baed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  myBytes: 
   myInt: 0
   myFloat: 0
-  myString: 0
+  myString: 
   myBool: 0
   myColor: {r: 0, g: 0, b: 0, a: 0}
   myKeyCode: 0
   myVector2: {x: 0, y: 0}
   myVector3: {x: 0, y: 0, z: 0}
+  myVector4: {x: 0, y: 0, z: 0, w: 0}
+  myQuaternion: {x: 0, y: 0, z: 0, w: 0}
   myString2: 
   displayableTempData:
     ints: 
@@ -181,6 +184,9 @@ MonoBehaviour:
     keycodes: 
     vector2s: []
     vector3s: []
+    vector4s: []
+    quaternions: []
+    byteArrays: []
     intKeys: []
     floatKeys: []
     stringKeys: []
@@ -189,6 +195,9 @@ MonoBehaviour:
     keycodeKeys: []
     vector2Keys: []
     vector3Keys: []
+    vector4Keys: []
+    quaternionKeys: []
+    byteArrayKeys: []
 --- !u!1 &908433292242877852
 GameObject:
   m_ObjectHideFlags: 0
