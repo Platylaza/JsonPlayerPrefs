@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text.RegularExpressions;
 using UnityEngine;
 
 public class JPP
@@ -52,7 +53,7 @@ public class JPP
             DebugError();
         else
         {
-            string dataToSave = JsonUtility.ToJson(savedData, !encryptFiles);
+            string dataToSave = CleanEmptyValuesFromJson(JsonUtility.ToJson(savedData, !encryptFiles));
             string path = FilePath();
 
             File.WriteAllText(path, EncryptDecrypt(dataToSave, encryptFiles));
@@ -521,7 +522,6 @@ public class JPP
         if (data.Length > 0)
             foreach (char c in data)
             {
-                Debug.Log(c);
                 if (c == ' ' || c == '\n')
                     continue;
                 if (c == '{')
@@ -532,7 +532,22 @@ public class JPP
 
         return false;
     }
+    /// <summary> Removes empty arrays from the json so it isn't wasting space in the file. </summary>
+    private static string CleanEmptyValuesFromJson(string json)
+    {
+        // Find keys with empty arrays like "myKey": [ ] or "myKey": []
+        string pattern = @"[ \t]*""[^""]+""\s*:\s*\[\s*\]\s*,?\r?\n?";
 
+        // Cleanup empty arrays and trailing commas inside the JSON curly braces
+        string cleanedJson = Regex.Replace(json, pattern, "");
+        cleanedJson = Regex.Replace(cleanedJson, @",(\s*\})", "$1");
+
+        // Re-add the new line for pretty print
+        if (cleanedJson[^2] != '\n')
+            cleanedJson = cleanedJson.Insert(cleanedJson.Length - 1, "\n");
+
+        return cleanedJson;
+    }
     /// <summary> Returns the file path as a dictionary, which is practically an associative string array with key-value pairs. </summary>
     protected Dictionary<string, string> FormatedFilePath(string fileName, string fileExtension = "DEFAULT", string folderPath = "DEFAULT")
     {

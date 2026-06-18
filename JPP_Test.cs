@@ -25,7 +25,7 @@ public class JPP_Test : MonoBehaviour
     {
         // Setup the instance by telling it what name, extension, and filePath you would like it to use for saving data.
         // This must be run even before calling any other jpp functions
-        jpp.Setup("MyFile-v1.3.0");
+        jpp.Setup("MyFile-v1.3.1");
 
         // Default values for jpp.Setup() are as follows:
         /*

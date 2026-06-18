@@ -1,4 +1,4 @@
-# JsonPlayerPrefs
+# JsonPlayerPrefs (JPP)
 Using the style of Unity's PlayerPrefs save data to json files on your hard drive
 
 # Unity c# reference code (Best read in "Code" view)
@@ -54,3 +54,6 @@ by running the function ReSetup() and inputting different values.
 ### Basic Encryption
 If you enable encryption by calling Setup() or ReSetup() and setting encrypt to true, it will replace each character with a random symbol.
 When loading data, JPP will automatically detect if a file is encrypted and decrypt it if it is.
+### Dynamic Serialization
+Before writing the JSON to the file, the save system automatically omits all unused data types. 
+This is so that they are not filling the file with unnecessary clutter.
