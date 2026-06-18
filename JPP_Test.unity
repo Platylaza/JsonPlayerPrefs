@@ -145,7 +145,7 @@ Transform:
   m_GameObject: {fileID: 1470785297}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.28752434, y: 64.03344, z: 1.3344984}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -165,12 +165,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myInt: 0
   myFloat: 0
-  myString: test3
+  myString: 0
   myBool: 0
   myColor: {r: 0, g: 0, b: 0, a: 0}
   myKeyCode: 0
-  myVector2: {x: 1, y: 2}
-  myVector3: {x: 2, y: 1, z: 3}
+  myVector2: {x: 0, y: 0}
+  myVector3: {x: 0, y: 0, z: 0}
   myString2: 
   displayableTempData:
     ints: 
