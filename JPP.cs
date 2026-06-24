@@ -10,6 +10,7 @@ public class JPP
     private string folderPath, fileName, fileExtension;
     private bool hasBeenSetup = false;
     private bool encryptFiles = false;
+    public readonly string version = "v1.4.1";
 
     /// <summary> 
     /// This is a string that will be used as a default value for all JPP instances when calling Setup() or ReSetup(). <br/>
@@ -506,7 +507,7 @@ public class JPP
     /// <summary> DELETES THE FILE. This is NOT REVERSIBLE. </summary>
     public void DeleteFile(string path = "DEFAULT") 
     {
-        path = path == "DEFAULT" ? FilePath() : path;
+        path = path.Replace("DEFAULT", FilePath());
         File.Delete(path);
 
         if (File.Exists(path))
@@ -517,7 +518,7 @@ public class JPP
     /// <summary> Creates a copy of the file at a target path. </summary>
     public void DuplicateFile(string newFilePath, string sourceFilePath = "DEFAULT", bool overriteFile = false) 
     {
-        sourceFilePath = sourceFilePath == "DEFAULT" ? FilePath() : sourceFilePath;
+        sourceFilePath = sourceFilePath.Replace("DEFAULT", FilePath());
         if (!overriteFile && File.Exists(newFilePath))
         {
             DebugError($"Could not duplicate file, there is already a file at path \n{newFilePath}\n, and overriteFile is set to false");
@@ -531,14 +532,14 @@ public class JPP
     /// <summary> Moves the file to a target path. </summary>
     public void MoveFile(string newPath, string currentPath = "DEFAULT")
     {
-        currentPath = currentPath == "DEFAULT" ? FilePath() : currentPath;
+        currentPath = currentPath.Replace("DEFAULT", FilePath());
         File.Move(currentPath, newPath);
         Debug.Log($"JPP: Successfully moved \"{currentPath}\" to \n{newPath}\n.");
     }
     /// <summary> Renames the file. </summary>
     public void RenameFile(string newName, string path = "DEFAULT")
     {
-        path = path == "DEFAULT" ? FilePath() : path;
+        path = path.Replace("DEFAULT", FilePath());
         string folderName = Path.GetDirectoryName(path);
         string fileName = Path.GetFileName(path);
         string fileExtension = Path.GetExtension(path);
@@ -549,7 +550,7 @@ public class JPP
     /// <summary> Changes the extension of the file. </summary>
     public void ChangeFileExtension(string newExtension, string path = "DEFAULT")
     {
-        path = path == "DEFAULT" ? FilePath() : path;
+        path = path.Replace("DEFAULT", FilePath());
         string folderName = Path.GetDirectoryName(path);
         string fileExtension = Path.GetExtension(path);
         string fileName = Path.GetFileName(path).Replace(fileExtension, "");
@@ -704,9 +705,9 @@ public class JPP
         if (!Directory.Exists(folderPath))
             Directory.CreateDirectory(folderPath);
 
-        this.folderPath = folderPath == "DEFAULT" ? defaultFolderPath : folderPath;
+        this.folderPath = folderPath.Replace("DEFAULT", defaultFolderPath);
         this.fileName = fileName;
-        this.fileExtension = fileExtension == "DEFAULT" ? defaultExtension : fileExtension;
+        this.fileExtension = fileExtension.Replace("DEFAULT", defaultExtension);
     }
     /// <summary> Returns the JPP's savedData variable. </summary>
     public SavedData GetTempDataAsClass() { return savedData; }
